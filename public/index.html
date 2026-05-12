@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SC SATURN V2.3 - Access</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #020617; color: white; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div id="login-box" class="glass p-8 rounded-3xl w-full max-w-md shadow-2xl">
+        <h2 class="text-2xl font-bold text-center mb-2">Login System</h2>
+        <p class="text-gray-400 text-center text-sm mb-6">Enter details to access script</p>
+        
+        <input type="email" id="email" placeholder="Email" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mb-3 focus:outline-none focus:border-blue-500">
+        <input type="password" id="pass" placeholder="Password" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mb-4 focus:outline-none focus:border-blue-500">
+        
+        <button onclick="reqOTP()" id="btn-otp" class="w-full bg-blue-600 p-3 rounded-xl font-bold hover:bg-blue-700 transition">Get OTP</button>
+
+        <div id="otp-area" class="hidden mt-4">
+            <input type="text" id="otp" placeholder="6 Digit OTP" class="w-full bg-white/5 border border-white/10 p-3 rounded-xl mb-4 text-center tracking-widest text-xl">
+            <button onclick="login()" class="w-full bg-green-600 p-3 rounded-xl font-bold">Verify & Enter</button>
+        </div>
+    </div>
+
+    <div id="dl-box" class="hidden glass p-10 rounded-3xl w-full max-w-lg text-center">
+        <h1 class="text-4xl font-black mb-2 text-blue-400 italic">SC SATURN07 V2.3</h1>
+        <p class="text-gray-400 mb-8">Premium Automation Script Ready</p>
+        
+        <button onclick="startDownload()" class="bg-white text-black px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-white/10">
+            DOWNLOAD NOW
+        </button>
+
+        <div class="mt-10 border-t border-white/10 pt-6 text-sm text-gray-500">
+            Status: <span class="text-green-500">Authorized Access ✅</span>
+        </div>
+    </div>
+
+    <script>
+        async function reqOTP() {
+            const email = document.getElementById('email').value;
+            if(!email) return alert('Input email!');
+            await fetch('/api/auth', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ action: 'SEND_OTP', email })
+            });
+            document.getElementById('otp-area').classList.remove('hidden');
+            document.getElementById('btn-otp').innerText = "Resend OTP";
+        }
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('pass').value;
+            const otp = document.getElementById('otp').value;
+
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ action: 'VERIFY_LOGIN', email, password, otp })
+            });
+
+            if(res.ok) {
+                document.getElementById('login-box').classList.add('hidden');
+                document.getElementById('dl-box').classList.remove('hidden');
+            } else {
+                alert('OTP Salah atau Expired!');
+            }
+        }
+
+        async function startDownload() {
+            const res = await fetch('/api/download', { method: 'POST' });
+            const data = await res.json();
+            window.location.href = data.url;
+        }
+    </script>
+</body>
+  </html>
