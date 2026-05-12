@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
         // Kirim Email via Resend
         await resend.emails.send({
-            from: 'admin@kaaaoffc.web.id',
+            from: 'code@kaaaoffc.web.id',
             to: email,
             subject: 'Kode OTP SC SATURN',
             html: `Your OTP code is: <strong>${generatedOtp}</strong>`
