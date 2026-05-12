@@ -1,0 +1,9 @@
+{
+  "name": "sc-saturn-v2",
+  "version": "2.3.0",
+  "dependencies": {
+    "mongoose": "^8.0.0",
+    "axios": "^1.6.0",
+    "resend": "^3.0.0"
+  }
+}
